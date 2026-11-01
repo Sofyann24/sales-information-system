@@ -36,7 +36,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   // 1. Fungsi Login
-
   Future<Map<String, dynamic>> login(String email, String password) async {
     _isLoading = true;
     notifyListeners();
@@ -86,22 +85,19 @@ class AuthProvider extends ChangeNotifier {
       debugPrint('Error fetch user profile: $e');
     } finally {
       _isLoading = false;
-      notifyListeners(); // 👈 Wajib dipanggil di finally agar loading berhenti
+      notifyListeners(); 
     }
   }
 
   // 3. Fungsi Logout
   Future<void> logout(BuildContext context) async {
     try {
-      // 1. Sign out dari Supabase
       await _supabase.auth.signOut();
 
-      // 2. Reset state user ke null
       _currentUser = null;
       notifyListeners();
 
       if (context.mounted) {
-        // 3. Arahkan balik ke halaman Login dan hapus semua history stack halaman sebelumnya
         Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
       }
     } catch (e) {
