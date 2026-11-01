@@ -5,7 +5,6 @@ enum UserRole { owner, kasir, unknown }
 class AuthService {
   final _supabase = Supabase.instance.client;
 
-  // 🟢 Ambil Role User dari Tabel Profiles Supabase
   Future<UserRole> getUserRole() async {
     try {
       final userId = _supabase.auth.currentUser?.id;
